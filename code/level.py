@@ -24,17 +24,11 @@ class Level:
         self.tiles.draw(self.display_surface)
         self.camera_movement()
 
-        print(len(self.enemy))
 
         x = Tile_Size*6
         y =Tile_Size*6
-        enemy_sprite = Enemy((x,y))
-        print  (Enemy((x,y)))
-        self.enemy.add(enemy_sprite)
-        print (len(self.enemy))
-
-        #self.enemy[0].update(self.world_shift)
-        #self.enemy[0].draw(self.display_surface)
+        
+    
 
 
         self.player.update()
@@ -88,8 +82,7 @@ class Level:
                     
 
     def setup_level(self,layout):
-        character_path = '../assets'
-        #self.layout = layout
+        
         self.tiles = pygame.sprite.Group()
         self.enemy = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
@@ -130,11 +123,7 @@ class Level:
                     y =Tile_Size*row_num
                     player_sprite = Player((x,y),self.display_surface)
                     self.player.add(player_sprite)
-                """if col == 'F':
-                    x = Tile_Size*col_num
-                    y =Tile_Size*row_num
-                    enemy_sprite = Enemy((x,y))
-                    self.enemy.add(enemy_sprite)"""
+                
                 
     def camera_movement(self):
         player = self.player.sprite
@@ -158,5 +147,4 @@ class Level:
 
         
 
-    
     
