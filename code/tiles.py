@@ -20,7 +20,7 @@ class Tile(pygame.sprite.Sprite):
         #pygame.draw.rect(Screen, (0,255,0), self.hitbox,1)
 
     def import_assets(self):
-        character_path = '../assets/'
+        character_path = 'assets/'
 
         for animation in tileset.keys():
             full_path = character_path + animation

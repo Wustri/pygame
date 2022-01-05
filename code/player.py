@@ -36,7 +36,7 @@ class Player(pygame.sprite.Sprite):
         self.particles = Particle(Screen)
 
     def import_assets(self):
-        character_path = '../assets/'
+        character_path = 'assets/'
 
         for animation in player_anim.keys():
             full_path = character_path + animation
