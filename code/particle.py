@@ -19,7 +19,7 @@ class Particle:
 				Surface = pygame.Surface((2,2), pygame.SRCALPHA)
 				Surface.fill((129,169,40,100)) 
 				self.screen.blit(Surface, particle[0])
-				print(particle[0])
+				#print(particle[0])
 
 	def add_particles(self,x,y):
 		pos_x = x

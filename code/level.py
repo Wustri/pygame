@@ -133,14 +133,14 @@ class Level:
 
        
         if player_x > (Screen_Width*3)/4 and direction_x > 0:
-            self.world_shift = 8
+            self.world_shift = 10
             player.speed = 0
         elif player_x < Screen_Width/4 and direction_x < 0:
-            self.world_shift = -8
+            self.world_shift = -10
             player.speed = 0
         else:
             self.world_shift = 0
-            player.speed = 8
+            player.speed = 6
 
     def Hud(self):
         writte_text(self.display_surface,'lives',100,200,32,(255,0,0),0,255)

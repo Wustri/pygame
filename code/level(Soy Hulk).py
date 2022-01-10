@@ -19,6 +19,7 @@ class Level:
         self.tiles.update(self.world_shift)
         self.tiles.draw(self.display_surface)
         self.camera_movement()
+        print('ged')
 
 
         self.player.update()
@@ -100,16 +101,20 @@ class Level:
     def camera_movement(self):
         player = self.player.sprite
         player_x = player.rect.centerx
-        direction_x = player.direction.x
-        keys = pygame.key.get_pressed()
+        print (player_x)
+        #direction_x = player.direction.x
+        
 
        
-        if player_x > (Screen_Width*3)/4 and direction_x > 0:
+        if player_x > (Screen_Width*3)/4:
             self.world_shift = 8
             player.speed = 0
-        elif player_x < Screen_Width/4 and direction_x < 0:
+            print('moving')
+        elif player_x < Screen_Width/4:
             self.world_shift = -8
             player.speed = 0
+            print('moving')
+
         else:
             self.world_shift = 0
             player.speed = 8

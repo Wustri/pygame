@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.width = 64
         self.rect.height = 64       
         self.direction = pygame.math.Vector2(0,0)
-        self.speed = 0
+        self.speed = 6
         self.gravity_force = 1.3
         self.jump_force = -18
         self.status = 'idle'
@@ -34,6 +34,7 @@ class Player(pygame.sprite.Sprite):
         self.on_right = False
         self.on_crouch = False
         self.particles = Particle(Screen)
+        self.Screen = Screen
 
     def import_assets(self):
         character_path = 'assets/'
@@ -43,9 +44,8 @@ class Player(pygame.sprite.Sprite):
             player_anim[animation] = import_folder(full_path)
         
     def update(self):
-        self.speed = 6
         self.anim() 
-        
+        pygame.draw.rect(self.Screen, (123,123,123), self.rect,1)
         self.get_input()
         self.rect.x += self.direction.x * self.speed    
         

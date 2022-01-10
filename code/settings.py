@@ -10,14 +10,14 @@ Map_Level = [
     '   TTT TT T         ',
     '      P             ',
     '             T      ',
-    '     LTTTTT TXT TT T',
+    '     LTTTTT TXT TT TTTTTTTTTTTTTT',
     '    LX              ',
     '   LXX              ',
     'T                   ',
     'XT     T     L R    ',
     '  T    X    LE WR   ',
     '     F     LXE WXR B',
-    'TTTTTTTTTTTXXE WXXTX',
+    'TTTTTTTTTTTXXE WXXTXTTTTTTTTTTTTTTTTTTTTT',
 ]
 
 Tile_Size = 48
