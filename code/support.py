@@ -6,11 +6,14 @@ import pygame
 def import_folder(path):
     images_list = []
     for _,__,files in walk(path):
-        for images in files:
+        sorted_files = sorted(files)
+        print(sorted_files)
+        for images in sorted_files:
             if images != '.DS_Store':
                 full_path = path + '/' + images 
                 image_load = pygame.image.load(full_path)
                 images_list.append(image_load) 
+                #print(full_path)
     return images_list
 
 def writte_text(display,text_to_render,X,Y,Size,text_color, background_color,alpha):
