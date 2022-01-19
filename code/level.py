@@ -21,21 +21,18 @@ class Level:
 
     def run(self):
         self.tiles.update(self.world_shift)
-        self.tiles.draw(self.display_surface)
-        self.camera_movement()
-
-
-        x = Tile_Size*6
-        y =Tile_Size*6
-        
-    
-
-
+        self.spikes.update(self.world_shift)
+        self.enemy.update(self.world_shift)
         self.player.update()
         self.x_collision()
         self.y_collision()
-        self.player.draw(self.display_surface)
+        self.camera_movement()
+        self.tiles.draw(self.display_surface)
+        self.spikes.draw(self.display_surface)
+        self.enemy.draw(self.display_surface)
         self.Hud()
+        self.player.draw(self.display_surface)
+        
         
 
     def x_collision(self):
@@ -48,12 +45,25 @@ class Level:
                     player.rect.left = sprite.hitbox.right 
                 elif player.direction.x > 0:
                     player.rect.right  = sprite.hitbox.left 
+
+        for sprite in self.spikes.sprites():
+            if sprite.hitbox.colliderect(player.rect):
+                player.hit()
+
     
     def y_collision(self):
         player = self.player.sprite
         player.gravity()
         player.hung_time += 1
          
+        
+        for sprite in self.spikes.sprites():
+            if sprite.hitbox.colliderect(player.rect):
+                player.hit()
+                if player.direction.y > 0:
+                    player.direction.y = 60
+                if player.direction.y > 0:
+                    player.direction.y = 60
 
         for sprite in self.tiles.sprites():
             if sprite.hitbox.colliderect(player.rect):
@@ -79,11 +89,15 @@ class Level:
                 player.on_hung = True
             else:
                 player.on_hung = False
+
+
+                
                     
 
     def setup_level(self,layout):
         
         self.tiles = pygame.sprite.Group()
+        self.spikes = pygame.sprite.Group()
         self.enemy = pygame.sprite.Group()
         self.player = pygame.sprite.GroupSingle()
         for row_num,row in enumerate(layout):
@@ -91,33 +105,38 @@ class Level:
                 if col == 'T':
                     x = Tile_Size*col_num
                     y =Tile_Size*row_num
-                    tile = Tile((x,y),'grass_tiles',1)    
+                    tile = Tile((x,y),'grass_tiles',1,100)    
                     self.tiles.add(tile)
                 if col == 'L':
                     x = Tile_Size*col_num
                     y =Tile_Size*row_num
-                    tile = Tile((x,y),'grass_tiles',1)
+                    tile = Tile((x,y),'grass_tiles',1,100)
                     self.tiles.add(tile)
                 if col == 'R':
                     x = Tile_Size*col_num
                     y =Tile_Size*row_num
-                    tile = Tile((x,y),'grass_tiles',1)
+                    tile = Tile((x,y),'grass_tiles',1,100)
                     self.tiles.add(tile)
                 if col == 'X':
                     x = Tile_Size*col_num
                     y =Tile_Size*row_num
-                    tile = Tile((x,y),'grass_tiles',1)
+                    tile = Tile((x,y),'grass_tiles',1,100)
                     self.tiles.add(tile)
                 if col == 'W':
                     x = Tile_Size*col_num
                     y =Tile_Size*row_num
-                    tile = Tile((x,y),'grass_tiles',0)
+                    tile = Tile((x,y),'grass_tiles',1,100)
                     self.tiles.add(tile)
                 if col == 'E':
                     x = Tile_Size*col_num
                     y =Tile_Size*row_num
-                    tile = Tile((x,y),'grass_tiles',1)
+                    tile = Tile((x,y),'grass_tiles',1,100)
                     self.tiles.add(tile)
+                if col == 'S':
+                    x = Tile_Size*col_num
+                    y =Tile_Size*row_num
+                    spike = Tile((x,y),'extra_tiles',0,50)
+                    self.spikes.add(spike)
                 if col == 'P':
                     x = Tile_Size*col_num
                     y =Tile_Size*row_num
@@ -143,7 +162,9 @@ class Level:
             player.speed = 6
 
     def Hud(self):
+        player = self.player.sprite
         writte_text(self.display_surface,'lives',100,200,32,(255,0,0),0,255)
+        writte_text(self.display_surface, str(player.lives) ,250,200,32,(255,0,0),0,255)
 
         
 

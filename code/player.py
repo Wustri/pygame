@@ -3,8 +3,11 @@ import os
 
 from pygame.transform import flip
 from settings import player_anim
+from settings import Sound
 from support import import_folder 
+from support import import_sounds
 from particle import *
+from menu import *
 
 
 
@@ -18,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.animation_speed = 0.15
         self.image =  player_anim['idle-01'][self.frame_index]
         self.rect = self.image.get_rect(midtop = pos)
-        self.rect.width = 64
+        self.rect.width = 32
         self.rect.height = 64       
         self.direction = pygame.math.Vector2(0,0)
         self.speed = 6
@@ -35,6 +38,10 @@ class Player(pygame.sprite.Sprite):
         self.on_crouch = False
         self.particles = Particle(Screen)
         self.Screen = Screen
+        self.lives = 3
+        self.hit_timeout = 0
+        self.die = False
+        Sound['sounds'][0].play(-1)
 
     def import_assets(self):
         character_path = 'assets/'
@@ -42,12 +49,22 @@ class Player(pygame.sprite.Sprite):
         for animation in player_anim.keys():
             full_path = character_path + animation
             player_anim[animation] = import_folder(full_path)
+
+        for sound in list(Sound):
+            full_path = character_path + sound
+            Sound[sound] = import_sounds(full_path)
+
         
     def update(self):
+        self.hit_timeout -= 1
         self.anim() 
         pygame.draw.rect(self.Screen, (123,123,123), self.rect,1)
         self.get_input()
-        self.rect.x += self.direction.x * self.speed    
+        self.rect.x += self.direction.x * self.speed  
+        if self.die:
+            pygame.draw.rect(self.Screen, (123,123,123), pygame.Rect(0, 0, 10000, 100000))
+
+
         
     def jump(self):
         self.direction.y = self.jump_force
@@ -58,9 +75,9 @@ class Player(pygame.sprite.Sprite):
         
     def get_input(self):
         keys = pygame.key.get_pressed()
-
         if keys[pygame.K_SPACE] and self.on_hung:
-            self.jump() 
+            self.jump()
+            Sound['sounds'][1].play()
             self.on_crouch = False
         elif keys[pygame.K_SPACE]:
             pass
@@ -108,11 +125,13 @@ class Player(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(center = self.rect.center)
         
     def get_status(self):
-        if self.on_crouch and self.direction.y > 0 and self.direction.y < 0:
+        if self.on_crouch and self.direction.y == 0:
             self.status = 'crouch'
-            self.image = pygame.transform.scale(self.image, (64,48))
+            #self.rect = pygame.transform.scale(self.rect, (64,48))
+            pass
         else:
-            self.image = pygame.transform.scale(self.image, (64,64))
+            #self.image = pygame.transform.scale(self.image, (64,64))
+            pass
 
         if self.direction.y >= self.gravity_force*2 :
             self.status = 'fall'
@@ -121,13 +140,26 @@ class Player(pygame.sprite.Sprite):
         else:
             if self.direction.x != 0 and self.on_ground:
                 self.status = 'run'
-                for i in range(5):
+                #if Sound['sounds'][0].get_busy():
+                #    Sound['sounds'][2].play()
+                for i in range(10):
                     self.particles.add_particles(self.rect.x + 32,self.rect.y + 64)
                 
             else:
                 if self.on_crouch == False:
                     self.status = 'idle-01'
         
+    def hit(self):
+        if self.hit_timeout < 0:
+            self.lives -= 1
+            Sound['sounds'][3].play()
+            self.hit_timeout = 60
+            if self.lives == 0:
+                self.die = True
+
+
+
+
 
 
 
