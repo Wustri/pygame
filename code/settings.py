@@ -1,5 +1,8 @@
+#calls the neccesary imports
 import pygame
 
+
+#create all the neccessary variables and dictionary
 Map_Level = [
     '                    ',
     '                    ',
@@ -7,17 +10,17 @@ Map_Level = [
     '                    ',
     '                    ',
     '                    ',
-    '   TTT TT T         ',
+    '   GNH GH O         ',
     '      P             ',
-    '             T      ',
-    '     LTTTTT TXT TT TTTTTTTTTTTTTT',
+    '             O      ',
+    '     GNNNNH GTH GH GNNNNNNNNNNNNNH',
     '    LX              ',
     '   LXX              ',
-    'T                      SSSSS',
-    'XT     T     L R    ',
-    '  T    X    LE WR   ',
-    '     F     LXE WXR B         SSSS      ',
-    'TTTTTTTTTTTXXE WXXTXTTTTTTTTTTTTTTTTTTTTT',
+    'O                      SSSSS',
+    'TT     O     L R    ',
+    '  O    O    LE WR   ',
+    '     O     LXE WXR           SSSS      ',
+    'TTTTTTTTTTTTTE WTTTTTTTTTTTTTTTTTTTTTTTTT',
 ]
 
 Tile_Size = 48
